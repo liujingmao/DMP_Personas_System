@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.imooc.dmp.mapper.phoenix.PhoenixTMapper">
+    <resultMap id="phoenixTResultMap" type="com.imooc.dmp.entity.phoenix.PhoenixT">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <select id="getPhoenixT" resultMap="phoenixTResultMap">
+        select * from "phoenix_test"
+    </select>
+</mapper>

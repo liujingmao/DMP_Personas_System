@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.imooc.dmp.mapper.mysql.MysqlTagsMapper">
+
+    <select id="getTagsByPage" resultType="com.imooc.dmp.entity.mysql.MysqlTags">
+        select
+        *
+        from tags limit #{page},#{size}
+    </select>
+
+    <select id="getTagById" parameterType="java.lang.Integer" resultType="com.imooc.dmp.entity.mysql.MysqlTags" >
+        select * from tags where tag_id=#{tag_id}
+    </select>
+
+    <select id="getTagsByType" parameterType="com.imooc.dmp.entity.mysql.MysqlTagsType"
+            resultType="com.imooc.dmp.entity.mysql.MysqlTags">
+        select * from tags where tag_level_second=#{type_id}
+    </select>
+
+    <select id="getTagsLevel" resultType="com.imooc.dmp.entity.mysql.MysqlTagsType">
+        select * from tags_type where type_parent_id=0 and type_group="type"
+    </select>
+
+    <select id="getTagsSecLevel" parameterType="java.lang.Integer" resultType="com.imooc.dmp.entity.mysql.MysqlTagsType">
+        select * from tags_type where type_parent_id=#{level_id} and type_group="type"
+    </select>
+
+    <insert id="addTag"
+            parameterType="com.imooc.dmp.entity.mysql.MysqlTags"
+            useGeneratedKeys="true"
+            keyProperty="tag_id" >
+        insert into tags
+        (tag_level,tag_name,tag_level_second,tag_id_string,tag_name_cn,
+         tag_level_cn,tag_level_second_cn,tag_value_type_cn,tag_value_type,
+         tag_expire,tag_type_cn,tag_type
+        )
+        values
+        (#{tag_level},#{tag_name},#{tag_level_second},#{tag_id_string},#{tag_name_cn},
+         #{tag_level_cn},#{tag_level_second_cn},#{tag_value_type_cn},#{tag_value_type},
+         #{tag_expire},#{tag_type_cn},#{tag_type}
+        )
+    </insert>
+
+    <update id="modifyTag" parameterType="com.imooc.dmp.entity.mysql.MysqlTags" flushCache="true">
+        update tags
+        <set>
+            <if test="tag_name != null" >
+            tag_name=#{tag_name,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where
+        tag_id = #{tag_id,jdbcType=INTEGER}
+    </update>
+
+    <update id="deleteTagById" parameterType="java.lang.Integer" flushCache="true">
+        update tags set tag_status=-1 where tag_id = #{tag_id}
+    </update>
+</mapper>

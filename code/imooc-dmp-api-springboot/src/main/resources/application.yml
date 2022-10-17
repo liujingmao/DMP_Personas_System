@@ -1,0 +1,109 @@
+spring:
+  data:
+    elasticsearch:
+      # 是否开启本地缓存
+      repositories:
+        enabled: false
+      # 9300这个端口是TCP端口，Java是使用TCP连接
+      # 9200这个端口是Http api端口
+      cluster-nodes: 192.168.137.33:9301
+  redis:
+    port: 6379
+    host: 192.168.137.33
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 500
+        min-idle: 0
+      lettuce:
+        shutdown-timeout: 0
+  # hbase这里的配置绑定到HBaseConfig
+  hbase:
+    'hbase.zookeeper.quorum': 'zoo1:2182'
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 配置德鲁伊连接池
+    druid:
+      # 配置 数据源
+      hive:
+        url: jdbc:hive2://192.168.137.33:10000
+        driver-class-name: org.apache.hive.jdbc.HiveDriver
+      phoenix:
+        url: jdbc:phoenix:192.168.137.33:2182
+        driver-class-name: org.apache.phoenix.jdbc.PhoenixDriver
+      clickhouse:
+        url: jdbc:clickhouse://192.168.137.33:8123
+        driver-class-name: ru.yandex.clickhouse.ClickHouseDriver
+        username: default
+        password:
+      mysql:
+        username: root
+        password: 123456
+        url: jdbc:mysql://192.168.137.33:3306/imooc?serverTimezone=Asia/Shanghai&useSSL=false
+        driver-class-name: com.mysql.cj.jdbc.Driver
+      # 最大的连接数
+      max-active: 200
+      # 初始化的连接数
+      initial-size: 10
+      max-wait: 60000
+      # 最小的连接数·
+      min-idle: 10
+      # 配置间隔时间 间隔多长时间检测需要关闭的空闲连接数 毫秒
+      time-between-eviction-runs-millis: 60000
+      # 一个连接最小的生存时间
+      min-evictable-idle-time-millis: 300000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      validation-query: select 1
+      # 是否缓存PrepareStatements
+      pool-prepared-statements: true
+      max-open-prepared-statements: 200
+      break-after-acquire-failure: true
+      time-between-connect-error-millis: 300000
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      use-global-dataSourceStat: true
+      filter:
+        config:
+          enabled: false
+      # 配置基础监控
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        # 不纳入统计的URI
+        exclusions: .js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*
+      # 统计监控可视化
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        # 允许访问的URI
+        allow:
+        # 禁止访问的URI
+        deny:
+      # 配置监控拦截filters
+      filters:
+        stat:
+          enable: true
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+          # 针对防火墙
+          wall:
+            config:
+              multi-statement-allow: true
+
+
+
+mybatis:
+  mapper-locations: classpath:com/imooc/dmp/mapper/*.xml
+
+
+
+
+
+
+
+
+
+

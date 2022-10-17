@@ -1,0 +1,7 @@
+﻿action_id,action_name,action_weitht,action_tag_id
+1,浏览商品详情页,2,46
+2,加入购物车,4,47
+3,购物车删除,-3,48
+4,下单,6,49
+5,关注,5,50
+6,点击,1,51
